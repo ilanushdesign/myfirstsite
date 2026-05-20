@@ -1,0 +1,227 @@
+/* --- COLOR PALETTE & VARIABLES --- */
+:root {
+    --crimson: #ff0033;
+    --electric-violet: #6600ff;
+    --dusty-lavender: #a89fcc;
+    --deep-indigo: #1a0b2e;
+    --warm-golden: #f5c71a;
+    --faded-pink: #f0a3a3;
+    --cyan: #00ffff;
+    
+    --bg-gradient: linear-gradient(135deg, var(--deep-indigo) 0%, #311b92 35%, #512da8 60%, #311b92 80%, #ff003322 100%); 
+}
+
+/* --- BASE STYLES --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--faded-pink);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- TEXTURES & ATMOSPHERE --- */
+.noise-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 1; 
+    background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    opacity: 0.25;
+    mix-blend-mode: overlay;
+}
+
+/* --- TYPOGRAPHY & HEADER LAYOUT --- */
+.archive-header {
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.header-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; 
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-profile-img {
+    width: 150px; 
+    height: 150px;
+    border: none; 
+    background-color: transparent;
+    box-shadow: none; 
+    overflow: hidden;
+}
+
+.header-profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+.header-profile-img:hover {
+    transform: translateY(-5px) scale(1.03); 
+}
+
+.header-text-stack {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; 
+    text-align: center;
+}
+
+.decor-row-top {
+    font-size: 1.5rem;
+    color: var(--faded-pink);
+    margin: 0;
+}
+
+.title-main {
+    font-size: clamp(2rem, 5vw, 3.5rem); 
+    text-transform: uppercase;
+    color: var(--warm-golden);
+    text-shadow: 2px 2px 0px var(--crimson), -2px -2px 0px var(--electric-violet);
+    letter-spacing: -2px;
+    margin: 0;
+}
+
+.title-sub {
+    font-size: 1.8rem;
+    color: var(--cyan);
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.decor-row-bottom {
+    font-size: 1.5rem;
+    color: var(--faded-pink);
+    margin: 0;
+}
+
+/* --- LAYOUT STRUCTURE --- */
+.archive-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+}
+
+/* השורה העליונה הבלעדית ל-5 התמונות */
+.top-featured-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+    justify-content: center;
+    align-items: flex-start; /* התיקון לשטחים הכחולים! מונע מתיחה של המסגרת */
+}
+
+.top-featured-row .panel {
+    flex: 1 1 200px;
+    max-width: 250px;
+    display: block;
+    margin-bottom: 0;
+}
+
+/* העיצוב המקורי של העמודות לשאר הארכיון */
+.masonry-grid {
+    columns: 4 200px; 
+    gap: 15px;
+}
+
+/* The Grid Panels */
+.panel {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+    background-color: var(--deep-indigo);
+    border: 3px solid var(--crimson);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 6px 6px 0px rgba(26, 11, 46, 0.8);
+    overflow: hidden; 
+}
+
+.panel img {
+    display: block;
+    width: 100%;
+    height: auto; 
+    filter: none;
+    transition: none;
+}
+
+/* --- INTERACTIVE & UNCANNY HOVER EFFECTS --- */
+.panel:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: -3px 0 0 var(--cyan), 3px 0 0 var(--crimson), 6px 6px 15px rgba(0,0,0,0.5);
+    border-color: var(--cyan);
+    z-index: 10;
+}
+
+.panel:hover img {
+    filter: none;
+}
+
+/* --- FOOTER --- */
+.archive-footer {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--dusty-lavender);
+    font-size: 0.8rem;
+    clear: both;
+    position: relative;
+    z-index: 5;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 1000px) {
+    .masonry-grid {
+        columns: 3; 
+    }
+}
+
+@media (max-width: 800px) {
+    .header-content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .header-profile-img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 600px) {
+    .masonry-grid {
+        columns: 2; 
+        gap: 10px;
+    }
+}
+.top-featured-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.top-featured-row .panel img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+}
